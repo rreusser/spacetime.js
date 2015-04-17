@@ -8,14 +8,14 @@ module.exports = function(grunt) {
         src: [
           'src/*.js'
         ],
-        dest: 'dist/eventable.js',
+        dest: 'dist/spacetime.js',
       }
     },
 
     uglify: {
       build: {
-        src: 'dist/eventable.js',
-        dest: 'dist/eventable.min.js'
+        src: 'dist/spacetime.js',
+        dest: 'dist/spacetime.min.js'
       }
     },
 
@@ -26,11 +26,19 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         },
-      } 
+      },
+      test: {
+        files: ['spec/**/*.js'],
+        tasks: ['test'],
+        options: {
+          spawn: false
+        }
+      }
+
     },
 
     jasmine: {
-      pivotal: {
+      spacetime: {
         src: 'src/**/*.js',
         options: {
           specs: 'spec/*Spec.js',
@@ -40,6 +48,10 @@ module.exports = function(grunt) {
     },
 
     jshint: {
+      all: [
+        'Gruntfile.js',
+        'src/**/*.js',
+      ],
       options: {
         curly: true,
         eqeqeq: true,
@@ -49,7 +61,6 @@ module.exports = function(grunt) {
           jQuery: true
         },
       },
-      uses_defaults: ['src/**/*.js'],
     },
   });
 
