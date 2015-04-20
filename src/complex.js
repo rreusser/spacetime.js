@@ -258,12 +258,14 @@ window.Spacetime.Complex = (function(Spacetime, Math) {
   Complex.csch = Complex.cosech;
   Complex.coth = Complex.cotanh;
 
-  Complex.I    = new Complex(0,1);
-  Complex.J    = new Complex(0,1);
-  Complex.ONE  = new Complex(1,0);
-  Complex.ZERO = new Complex(0,0);
-  Complex.PI   = new Complex(Math.PI,0);
-  Complex.E    = new Complex(Math.E,0);
+  Object.defineProperties(Complex,{
+    I:    { get: function() { return new Complex(0,1); } },
+    J:    { get: function() { return new Complex(0,1); } },
+    ONE:  { get: function() { return new Complex(1,0); } },
+    ZERO: { get: function() { return new Complex(0,0); } },
+    PI:   { get: function() { return new Complex(Math.PI,0); } },
+    E:    { get: function() { return new Complex(Math.E,0); } },
+  });
 
   return Complex;
 

@@ -114,32 +114,37 @@ describe("Complex Numbers", function() {
 
   describe("Constants",function() {
 
-    it("Defines zero", function() {
+    it("expects constants to be immutable",function() {
+      Complex.ONE.real = 2;
+      expect( Complex.ONE ).toEqual( new Complex(1,0) );
+    })
+
+    it("defines zero", function() {
       expect( Complex.ZERO.real ).toEqual( 0 );
       expect( Complex.ZERO.imag ).toEqual( 0 );
     });
 
-    it("Defines one", function() {
+    it("defines one", function() {
       expect( Complex.ONE.real ).toEqual( 1 );
       expect( Complex.ONE.imag ).toEqual( 0 );
     });
 
-    it("Defines i", function() {
+    it("defines i", function() {
       expect( Complex.I.real ).toEqual( 0 );
       expect( Complex.I.imag ).toEqual( 1 );
     });
 
-    it("Defines j in case you're an electrical engineer", function() {
+    it("defines j in case you're an electrical engineer", function() {
       expect( Complex.J.real ).toEqual( 0 );
       expect( Complex.J.imag ).toEqual( 1 );
     });
 
-    it("Defines pi", function() {
+    it("defines pi", function() {
       expect( Complex.PI.real ).toBeCloseTo( Math.PI, 1e-8 );
       expect( Complex.PI.imag ).toEqual( 0 );
     });
 
-    it("Defines e", function() {
+    it("defines e", function() {
       expect( Complex.E.real ).toBeCloseTo( Math.E, 1e-8 );
       expect( Complex.E.imag ).toEqual( 0 );
     });
