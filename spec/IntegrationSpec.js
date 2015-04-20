@@ -106,6 +106,88 @@ describe("Function Integration", function() {
 
     });
 
+
+    describe("Euler Integration",function() {
+      it("integrates y=1 from x=1 to x=4", function() {
+        var f = function(x) { return 1; };
+        var i = Integrate( f, 1, 4, { bins: 4, method: 'euler' });
+        expect( i ).toBeCloseTo( 3, 8 );
+      });
+
+      it("integrates y=x from x=1 to x=4", function() {
+        var f = function(x) { return x; };
+        var i = Integrate( f, 1, 4, { bins: 100, method: 'euler' });
+        expect( i ).toBeCloseTo( 7.5, 1 );
+      });
+
+      it("integrates -5x^3 + 3x^2 - 2x + 1 from x=1 to x=4", function() {
+        var f = function(x) { return -5*x*x*x + 3*x*x - 2*x + 1; };
+        var i = Integrate( f, 1, 4, { bins: 100, method: 'euler' });
+        expect( i ).toBeCloseTo( -267.75, -1 );
+      });
+
+      it("integrates sin(x) from x=0 to x=pi", function() {
+        var f = function(x) { return Math.sin(x) };
+        var i = Integrate( f, 0, Math.PI, { bins: 100, method: 'euler' });
+        expect( i ).toBeCloseTo( 2 );
+      });
+
+    });
+
+    describe("RK-2 Midpoint Integration",function() {
+      it("integrates y=1 from x=1 to x=4", function() {
+        var f = function(x) { return 1; };
+        var i = Integrate( f, 1, 4, { bins: 2, method: 'rk2' });
+        expect( i ).toBeCloseTo( 3, 8 );
+      });
+
+      it("integrates y=x from x=1 to x=4", function() {
+        var f = function(x) { return x; };
+        var i = Integrate( f, 1, 4, { bins: 2, method: 'rk2' });
+        expect( i ).toBeCloseTo( 7.5, 8 );
+      });
+
+      it("integrates -5x^3 + 3x^2 - 2x + 1 from x=1 to x=4", function() {
+        var f = function(x) { return -5*x*x*x + 3*x*x - 2*x + 1; };
+        var i = Integrate( f, 1, 4, { bins: 20, method: 'rk2' });
+        expect( i ).toBeCloseTo( -267.75, 0 );
+      });
+
+      it("integrates sin(x) from x=0 to x=pi", function() {
+        var f = function(x) { return Math.sin(x) };
+        var i = Integrate( f, 0, Math.PI, { bins: 8, method: 'rk2' });
+        expect( i ).toBeCloseTo( 2, 1 );
+      });
+    });
+
+    describe("RK-4 Integration",function() {
+      it("integrates y=1 from x=1 to x=4", function() {
+        var f = function(x) { return 1; };
+        var i = Integrate( f, 1, 4, { bins: 2, method: 'rk4' });
+        expect( i ).toBeCloseTo( 3, 8 );
+      });
+
+      it("integrates y=x from x=1 to x=4", function() {
+        var f = function(x) { return x; };
+        var i = Integrate( f, 1, 4, { bins: 2, method: 'rk4' });
+        expect( i ).toBeCloseTo( 7.5, 8 );
+      });
+
+      it("integrates -5x^3 + 3x^2 - 2x + 1 from x=1 to x=4", function() {
+        var f = function(x) { return -5*x*x*x + 3*x*x - 2*x + 1; };
+        var i = Integrate( f, 1, 4, { bins: 8, method: 'rk4' });
+        expect( i ).toBeCloseTo( -267.75, 4 );
+      });
+
+      it("integrates sin(x) from x=0 to x=pi", function() {
+        var f = function(x) { return Math.sin(x) };
+        var i = Integrate( f, 0, Math.PI, { bins: 8, method: 'rk4' });
+        expect( i ).toBeCloseTo( 2, 4 );
+      });
+
+    });
+
+
   });
 
 });

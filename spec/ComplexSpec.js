@@ -16,9 +16,17 @@ describe("Complex Numbers", function() {
       expect(z.imag).toBeCloseTo(2);
     });
 
+    it("copies complex numbers",function() {
+      var a = new Complex(1,2);
+      var b = a.copy();
+      expect( a === b ).toBe(false);
+      expect(a).not.toBe(b);
+      expect(a).toEqual(b);
+    });
+
   });
 
-  describe("Creating complex numbers",function() {
+  describe("Representing complex numbers",function() {
 
     it("creates a complex number in rectangular coordinates",function() {
       var z = Complex.rect(3,4);
@@ -33,17 +41,83 @@ describe("Complex Numbers", function() {
     });
 
     it("creates real numbers",function() {
-      var z = Complex.Real(20);
+      var z = Complex.real(20);
       expect(z).toBeComplexCloseTo( Complex.rect(20,0) );
     });
 
     it("creates real numbers",function() {
-      var z = Complex.Imag(20);
+      var z = Complex.imag(20);
       expect(z).toBeComplexCloseTo( Complex.rect(0,20) );
     });
   });
 
+  describe("Interpreting complex numbers",function() {
+
+    it("Complex.create(2): interprets a single number as a real number",function() {
+      var z = Complex.create(2);
+      expect(z).toBeComplexCloseTo( Complex.rect(2,0) );
+    });
+
+    it("Complex.create(2,3): interprets multiple arguments as real and imaginary components of a complex number",function() {
+      var z = Complex.create(2,3);
+      expect(z).toBeComplexCloseTo( Complex.rect(2,3) );
+    });
+
+    it("Complex.create([a]): interprets an array with a single component as a real number",function() {
+      var z = Complex.create([2]);
+      expect(z).toBeComplexCloseTo( Complex.rect(2,0) );
+    });
+    
+    it("Complex.create([2,3]): interprets an array as real and imaginary components of a complex number",function() {
+      var z = Complex.create([2,3]);
+      expect(z).toBeComplexCloseTo( Complex.rect(2,3) );
+    });
+    
+    it("Complex.create(): is zero when passed no arguments",function() {
+      var z = Complex.create();
+      expect(z).toEqual( Complex.ZERO );
+    });
+
+    it("Complex.create(z): copies a complex number when created from a complex number",function() {
+      var a = Complex.rect(2,3);
+      var b = Complex.create( a );
+      expect(a).toEqual( b );
+      expect(a).not.toBe( b );
+    });
+  });
+
+  describe("Equality",function() {
+    it("tests for equality",function() {
+      var a = new Complex(1,2);
+      var b = new Complex(1,2);
+      expect(a).toEqual(b);
+    });
+
+    it("tests for inequality",function() {
+      var a = new Complex(1,2);
+      var b = new Complex(3,4);
+      expect(a).not.toEqual(b);
+    });
+
+    it("tests for identical inequality",function() {
+      var a = new Complex(1,2);
+      var b = new Complex(3,4);
+      expect(a).not.toBe(b);
+    });
+
+    it("tests for identical equality",function() {
+      var a = new Complex(1,2);
+      expect(a).toBe(a);
+    });
+
+  });
+
   describe("Constants",function() {
+
+    it("Defines zero", function() {
+      expect( Complex.ZERO.real ).toEqual( 0 );
+      expect( Complex.ZERO.imag ).toEqual( 0 );
+    });
 
     it("Defines one", function() {
       expect( Complex.ONE.real ).toEqual( 1 );
@@ -205,6 +279,14 @@ describe("Complex Numbers", function() {
       var n = 4.5;
       var c = Complex.rpow( a, n );
       expect(c).toBeComplexCloseTo( Complex.rect( 9.963495519579647, -36.03153123263964 ) );
+
+      n = 0.2;
+      c = Complex.rpow( a, n );
+      expect(c).toBeComplexCloseTo( Complex.rect( 1.1459399633250584, 0.2579753126091295 ) );
+
+      n = 0.0;
+      c = Complex.rpow( a, n );
+      expect(c).toBeComplexCloseTo( Complex.rect( 1, 0 ) );
     });
 
     it("calculates complex powers of complex numbers",function() {
@@ -307,13 +389,13 @@ describe("Complex Numbers", function() {
   describe("Specific examples",function() {
 
     it("satisfies Euler's formula, e^(i*pi) + 1 == 0",function() {
-      var sum = Complex.add( Complex.cpow( Complex.E, Complex.Imag(Math.PI) ), Complex.ONE );
+      var sum = Complex.add( Complex.cpow( Complex.E, Complex.imag(Math.PI) ), Complex.ONE );
       expect(sum.real).toBeCloseTo(0);
       expect(sum.imag).toBeCloseTo(0);
     });
 
     it("satisfies log(-1) = i*pi",function() {
-      expect( Complex.log(Complex.ONE.neg) ).toBeComplexCloseTo( Complex.Imag(Math.PI) );
+      expect( Complex.log(Complex.ONE.neg) ).toBeComplexCloseTo( Complex.imag(Math.PI) );
     });
 
   });

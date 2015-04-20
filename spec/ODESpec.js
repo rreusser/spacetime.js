@@ -18,7 +18,7 @@ describe("ODE Solver", function() {
 
     it("creates a workspace", function() {
       var i = new Integrator(undefined,[1,2,3]);
-      expect(i.workspace.w1.length).toEqual(3);
+      expect(i.workspace.w0.length).toEqual(3);
     });
 
   });
@@ -52,13 +52,12 @@ describe("ODE Solver", function() {
       });
 
       it("Takes two timesteps",function() {
-        i.step();
-        i.step();
+        i.steps(2);
         expect(i.y[0]).toBeCloseTo(0);
         expect(i.y[1]).toBeCloseTo(2);
       });
 
-      it("is second order accurate",function() {
+      it("is first order accurate",function() {
         // Compute two approximations that differ by a refinement factor and confirm
         // that the error is reduced by (1/factor)^2:
         var expectedOrder = 1;
@@ -132,6 +131,48 @@ describe("ODE Solver", function() {
       });
 
     });
+
+    describe("RK-4 integration", function() {
+      var i;
+
+      beforeEach(function() {
+        i = new Integrator( f, y0, {method: 'rk4'} );
+      });
+
+      it("Integrates halfway around the circle",function() {
+        var n = 20;
+        i.dt = Math.PI / n;
+        for(var j=0; j<n; j++) i.step();
+        expect(i.y[0]).toBeCloseTo(-1,2);
+        expect(i.y[1]).toBeCloseTo(0,2);
+      });
+
+      it("is fourth order accurate",function() {
+        // Compute two approximations that differ by a refinement factor and confirm
+        // that the error is reduced by (1/factor)^2:
+        var expectedOrder = 4;
+        var j, n = 10, factor = 3;
+
+        // Integrate one quadrant of a circle:
+        var y1 = [1,0];
+        var y2 = [1,0];
+        var i1 = new Integrator( f, y1, {method: 'rk4', dt: 0.5 * Math.PI / n } );
+        var i2 = new Integrator( f, y2, {method: 'rk4', dt: 0.5 * Math.PI / (factor*n) } );
+        for(j=0; j<n; j++) i1.step();
+        for(j=0; j<n*factor; j++) i2.step();
+
+        // Calculate the error of each approximation:
+        var error1 = Math.sqrt(Math.pow(y1[0],2) + Math.pow(y1[1]-1,2));
+        var error2 = Math.sqrt(Math.pow(y2[0],2) + Math.pow(y2[1]-1,2));
+
+        // Calculate the observed order of convergence:
+        var observedOrder = Math.log( error1 / error2 ) / Math.log(factor);
+
+        expect( observedOrder ).toBeCloseTo( expectedOrder );
+      });
+
+    });
+
 
   });
 

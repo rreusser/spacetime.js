@@ -28,17 +28,49 @@ window.Spacetime.Complex = (function(Spacetime, Math) {
     return new Complex( a, b );
   };
 
+  Complex.fromArray = function ComplexFromArray( arr ) {
+    return new Complex( arr[0], arr[1] );
+  };
+
   Complex.polar = function ComplexPolar( mod, arg ) {
     return new Complex( mod*Math.cos(arg), mod*Math.sin(arg) );
   };
 
-  Complex.Real = function ComplexReal(a) {
+  Complex.real = function ComplexReal(a) {
     return new Complex(a,0);
   };
 
-  Complex.Imag = function ComplexReal(b) {
+  Complex.imag = function ComplexReal(b) {
     return new Complex(0,b);
   };
+
+  Complex.create = function ComplexNew () {
+    switch( arguments.length ) {
+      case 0:
+        return new Complex(0,0);
+      case 1:
+        if( typeof arguments[0] === 'number' ) {
+          return new Complex(arguments[0], 0);
+
+        } else if( arguments[0] instanceof Complex ) {
+          return arguments[0].copy();
+
+        } else if( arguments[0] instanceof Array ) {
+          return new Complex( arguments[0][0] || 0, arguments[0][1] || 0 );
+        }
+        break;
+      case 2:
+        if( typeof arguments[0] === 'number' && typeof arguments[1] === 'number' ) {
+          return new Complex( arguments[0], arguments[1] );
+        }
+        break;
+    }
+  };
+
+  Complex.prototype.copy = function ComplexCopy() {
+    return new Complex( this.real, this.imag );
+  };
+
 
   Object.defineProperties(Complex.prototype,{
     mod: {
@@ -229,6 +261,7 @@ window.Spacetime.Complex = (function(Spacetime, Math) {
   Complex.I    = new Complex(0,1);
   Complex.J    = new Complex(0,1);
   Complex.ONE  = new Complex(1,0);
+  Complex.ZERO = new Complex(0,0);
   Complex.PI   = new Complex(Math.PI,0);
   Complex.E    = new Complex(Math.E,0);
 
