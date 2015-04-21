@@ -42,12 +42,12 @@ describe("Complex Numbers", function() {
 
     it("creates real numbers",function() {
       var z = Complex.real(20);
-      expect(z).toBeComplexCloseTo( Complex.rect(20,0) );
+      expect(z).toBeComplexCloseTo([20,0]);
     });
 
     it("creates real numbers",function() {
       var z = Complex.imag(20);
-      expect(z).toBeComplexCloseTo( Complex.rect(0,20) );
+      expect(z).toBeComplexCloseTo([0,20]);
     });
   });
 
@@ -86,30 +86,16 @@ describe("Complex Numbers", function() {
     });
   });
 
-  describe("Equality",function() {
-    it("tests for equality",function() {
-      var a = new Complex(1,2);
-      var b = new Complex(1,2);
-      expect(a).toEqual(b);
+  describe("Conversion to string",function() {
+    it("casts to a string",function() {
+      var z = new Complex(2.5,3.5);
+      expect(z.toString()).toMatch(/^\(2.5[0-9]*\+3.5[0-9]*i\)$/);
     });
 
-    it("tests for inequality",function() {
-      var a = new Complex(1,2);
-      var b = new Complex(3,4);
-      expect(a).not.toEqual(b);
+    it("omits the '+' when the complex part is negative",function() {
+      var z = new Complex(2.5,-3.5);
+      expect(z.toString()).toMatch(/^\(2.5[0-9]*\-3.5[0-9]*i\)$/);
     });
-
-    it("tests for identical inequality",function() {
-      var a = new Complex(1,2);
-      var b = new Complex(3,4);
-      expect(a).not.toBe(b);
-    });
-
-    it("tests for identical equality",function() {
-      var a = new Complex(1,2);
-      expect(a).toBe(a);
-    });
-
   });
 
   describe("Constants",function() {
@@ -172,15 +158,15 @@ describe("Complex Numbers", function() {
     });
 
     it("calculates the complex conjugate",function() {
-      expect(a.conj).toBeComplexCloseTo( Complex.rect(1,-2) );
+      expect(a.conj).toBeComplexCloseTo([1,-2]);
     });
 
     it("negates the number",function() {
-      expect(a.neg).toBeComplexCloseTo( Complex.rect(-1,-2) );
+      expect(a.neg).toBeComplexCloseTo([-1,-2]);
     });
 
     it("inverts the number",function() {
-      expect(a.inv).toBeComplexCloseTo( Complex.rect(0.2,-0.4) );
+      expect(a.inv).toBeComplexCloseTo([0.2,-0.4]);
     });
   });
 
@@ -195,27 +181,27 @@ describe("Complex Numbers", function() {
 
     it("adds complex numbers",function() {
       var c = Complex.add( a, b );
-      expect(c).toBeComplexCloseTo( Complex.rect(4,7) );
+      expect(c).toBeComplexCloseTo([4,7]);
     });
 
     it("subtracts complex numbers",function() {
       var c = Complex.sub( a, b );
-      expect(c).toBeComplexCloseTo( Complex.rect(-2,-3) );
+      expect(c).toBeComplexCloseTo([-2,-3]);
     });
 
     it("multiples complex numbers",function() {
       var c = Complex.mul( a, b );
-      expect(c).toBeComplexCloseTo( Complex.rect(-7,11) );
+      expect(c).toBeComplexCloseTo([-7,11]);
     });
 
     it("multiples a complex number by a real number",function() {
       var c = Complex.fmul( a, 2 );
-      expect(c).toBeComplexCloseTo( Complex.rect(2,4) );
+      expect(c).toBeComplexCloseTo([2,4]);
     });
 
     it("divides complex numbers",function() {
       var c = Complex.div( a, b );
-      expect(c).toBeComplexCloseTo( Complex.rect(13/34,1/34) );
+      expect(c).toBeComplexCloseTo([13/34,1/34]);
     });
 
   });
@@ -231,31 +217,31 @@ describe("Complex Numbers", function() {
 
     it("adds a complex number and returns self",function() {
       var c = a.add(b);
-      expect(a).toBeComplexCloseTo( Complex.rect(4,7) );
+      expect(a).toBeComplexCloseTo([4,7]);
       expect(c).toEqual(a);
     });
 
     it("subtracts a complex number and returns self",function() {
       var c = a.sub(b);
-      expect(a).toBeComplexCloseTo( Complex.rect(-2,-3) );
+      expect(a).toBeComplexCloseTo([-2,-3]);
       expect(c).toEqual(a);
     });
 
     it("multiples by a complex number and returns self",function() {
       var c = a.mul(b);
-      expect(a).toBeComplexCloseTo( Complex.rect(-7,11) );
+      expect(a).toBeComplexCloseTo([-7,11]);
       expect(c).toEqual(a);
     });
 
     it("multiples by a real number and returns self",function() {
       var c = a.fmul(2);
-      expect(a).toBeComplexCloseTo( Complex.rect(2,4) );
+      expect(a).toBeComplexCloseTo([2,4]);
       expect(c).toEqual(a);
     });
 
     it("divides by a complex number and returns self",function() {
       var c = a.div(b);
-      expect(a).toBeComplexCloseTo( Complex.rect(13/34,1/34) );
+      expect(a).toBeComplexCloseTo([13/34,1/34]);
       expect(c).toEqual(a);
     });
 
@@ -271,42 +257,42 @@ describe("Complex Numbers", function() {
 
     it("calculates the square root",function() {
       var c = Complex.sqrt( a );
-      expect(c).toBeComplexCloseTo( Complex.rect( 1.272019649514069, 0.7861513777574233 ) );
+      expect(c).toBeComplexCloseTo([1.272019649514069, 0.7861513777574233]);
     });
 
     it("calculates the principle nth root",function() {
       var n = 4.5;
       var c = Complex.nthRoot( a, n );
-      expect(c).toBeComplexCloseTo( Complex.rect( 1.1598027375011442, 0.29125033629779823 ) );
+      expect(c).toBeComplexCloseTo([1.1598027375011442, 0.29125033629779823]);
     });
 
     it("calculates the nth power",function() {
       var n = 4.5;
       var c = Complex.rpow( a, n );
-      expect(c).toBeComplexCloseTo( Complex.rect( 9.963495519579647, -36.03153123263964 ) );
+      expect(c).toBeComplexCloseTo([9.963495519579647, -36.03153123263964]);
 
       n = 0.2;
       c = Complex.rpow( a, n );
-      expect(c).toBeComplexCloseTo( Complex.rect( 1.1459399633250584, 0.2579753126091295 ) );
+      expect(c).toBeComplexCloseTo([1.1459399633250584, 0.2579753126091295]);
 
       n = 0.0;
       c = Complex.rpow( a, n );
-      expect(c).toBeComplexCloseTo( Complex.rect( 1, 0 ) );
+      expect(c).toBeComplexCloseTo([1,0]);
     });
 
     it("calculates complex powers of complex numbers",function() {
       var c = Complex.cpow( a, b );
-      expect(c).toBeComplexCloseTo( Complex.rect( 0.02148157726686086, 0.038499602830024626 ) );
+      expect(c).toBeComplexCloseTo([0.02148157726686086, 0.038499602830024626]);
     });
 
     it("calculates the complex exponential",function() {
       var c = Complex.exp(a);
-      expect(c).toBeComplexCloseTo( Complex.rect( -1.1312043837568135, 2.4717266720048188 ) );
+      expect(c).toBeComplexCloseTo([-1.1312043837568135, 2.4717266720048188]);
     });
 
     it("calculates the principle value of the logarithm", function() {
       var c = Complex.log(a);
-      expect(c).toBeComplexCloseTo( Complex.rect( 0.8047189562170503, 1.1071487177940904 ) );
+      expect(c).toBeComplexCloseTo([0.8047189562170503, 1.1071487177940904]);
     });
 
   });
@@ -321,17 +307,17 @@ describe("Complex Numbers", function() {
 
     it("calculates the complex cosine",function() {
       var c = Complex.cos(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(2.0327230070196656, -3.0518977991517997 ) );
+      expect(c).toBeComplexCloseTo([2.0327230070196656, -3.0518977991517997]);
     });
 
     it("calculates the complex sine",function() {
       var c = Complex.sin(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(3.165778513216168, 1.959601041421606 ) );
+      expect(c).toBeComplexCloseTo([3.165778513216168, 1.959601041421606]);
     });
 
     it("calculates the complex tangent",function() {
       var c = Complex.tan(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(0.0338128260798967, 1.0147936161466333 ) );
+      expect(c).toBeComplexCloseTo([0.0338128260798967, 1.0147936161466333]);
     });
 
     it("calculates the complex secant",function() {
@@ -361,17 +347,17 @@ describe("Complex Numbers", function() {
 
     it("calculates the complex hyperbolic cosine",function() {
       var c = Complex.cosh(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(-0.64214812471552, 1.0686074213827783) );
+      expect(c).toBeComplexCloseTo([-0.64214812471552, 1.0686074213827783]);
     });
 
     it("calculates the complex hyperbolic sine",function() {
       var c = Complex.sinh(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(-0.4890562590412937, 1.4031192506220405) );
+      expect(c).toBeComplexCloseTo([-0.4890562590412937, 1.4031192506220405]);
     });
 
     it("calculates the complex hyperbolic tangent",function() {
       var c = Complex.tanh(a);
-      expect(c).toBeComplexCloseTo( Complex.rect(1.16673625724092, -0.24345820118572534) );
+      expect(c).toBeComplexCloseTo([1.16673625724092, -0.24345820118572534]);
     });
 
     it("calculates the complex hyperbolic secant",function() {
@@ -400,7 +386,7 @@ describe("Complex Numbers", function() {
     });
 
     it("satisfies log(-1) = i*pi",function() {
-      expect( Complex.log(Complex.ONE.neg) ).toBeComplexCloseTo( Complex.imag(Math.PI) );
+      expect( Complex.log(Complex.ONE.neg) ).toBeComplexCloseTo( [0,Math.PI] );
     });
 
   });

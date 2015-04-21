@@ -44,6 +44,10 @@ window.Spacetime.Complex = (function(Spacetime, Math) {
     return new Complex(0,b);
   };
 
+  Complex.prototype.toString = function ComplexToString () {
+    return "("+this.real+(this.imag >= 0 ? "+" : "")+this.imag+"i)";
+  };
+
   Complex.create = function ComplexNew () {
     switch( arguments.length ) {
       case 0:

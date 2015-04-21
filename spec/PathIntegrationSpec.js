@@ -14,28 +14,20 @@ describe("Path Integrals of Complex Analytic Functions", function() {
 
       var i = PI.Integrate( f, circle, {method: 'rk4', steps: 10});
 
-      expect(i.real).toBeCloseTo(0);
-      expect(i.imag).toBeCloseTo(0);
+      expect(i).toBeComplexCloseTo([0,0]);
     });
 
   });
 
   describe("The Residue Theorem", function() {
 
-    for(var j=0; j<3; j++) {
+    for(var j=0; j<2; j++) {
       (function(numPoles) {
         it('Satisfies the residue theorem for ' + numPoles + ' poles',function() {
           var circle = PI.Path.Circle( Complex.rect(0,0), 1 );
-          var f = function(z) {
-            var x = Complex.ONE;
-            x.div( z );// Complex.add(z, Complex.Real( 0.5 + numPoles) ) );
-            return x;
-          };
-
+          var f = function(z) { return Complex.rpow(z,-numPoles); };
           var i = PI.Integrate( f, circle, {method: 'rk4', steps: 100});
-
-          expect(i.real).toBeCloseTo( 0 );
-          expect(i.imag).toBeCloseTo( Math.PI * 2 * numPoles );
+          expect(i).toBeComplexCloseTo( Complex.rect(0, Math.PI * 2 * numPoles ) );
         });
       }(j));
     }

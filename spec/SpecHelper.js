@@ -35,7 +35,7 @@ beforeEach(function() {
           }    
 
           return {
-            pass: Complex.sub(actual,expected).mod < (Math.pow(10, -precision) / 2) 
+            pass: Complex.sub(Complex.create(actual),Complex.create(expected)).mod < (Math.pow(10, -precision) / 2) 
           };   
         }  
       };
