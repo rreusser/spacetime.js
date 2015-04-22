@@ -4,6 +4,8 @@ beforeEach(function() {
   'use strict';
 
   var Complex = window.Spacetime.Complex;
+  var RVector = window.Spacetime.Linalg.RVector;
+  var CVector = window.Spacetime.Linalg.CVector;
 
   jasmine.addMatchers({
     toHaveArgumentCloseTo: function( util, customEqualityTesters) {
@@ -37,6 +39,50 @@ beforeEach(function() {
           return {
             pass: Complex.sub(Complex.create(actual),Complex.create(expected)).mod < (Math.pow(10, -precision) / 2) 
           };   
+        }  
+      };
+    },
+    toBeRVectorCloseTo: function( util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected, precision) {
+
+          if (precision !== 0) { 
+            precision = precision || 2;
+          }    
+
+          if( actual.length != expected.length ) {
+            return {
+              pass: false,
+              message: 'Expected RVector ' + actual.toString() + ' to be close to RVector ' + expected.toString() + ' (RVector dimension mismatch)'
+            };
+          } else {
+            return {
+              pass: RVector.sub(actual,expected).norm < (Math.pow(10, -precision) / 2),
+              message: 'Expected RVector ' + actual.toString() + ' to be close to RVector ' + expected.toString()
+            };   
+          }
+        }  
+      }
+    },
+    toBeCVectorCloseTo: function( util, customEqualityTesters) {
+      return {
+        compare: function(actual, expected, precision) {
+
+          if (precision !== 0) { 
+            precision = precision || 2;
+          }    
+
+          if( actual.length != expected.length ) {
+            return {
+              pass: false,
+              message: 'Expected CVector ' + actual.toString() + ' to be close to CVector ' + expected.toString() + ' (CVector dimension mismatch)'
+            };
+          } else {
+            return {
+              pass: CVector.sub(actual,expected).norm < (Math.pow(10, -precision) / 2),
+              message: 'Expected CVector ' + actual.toString() + ' to be close to CVector ' + expected.toString()
+            };   
+          }
         }  
       };
     }
