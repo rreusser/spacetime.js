@@ -1,1 +1,0 @@
-window.ComplexRootFinder = window.ComplexRootFinder || {};
