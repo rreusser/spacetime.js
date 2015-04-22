@@ -159,12 +159,12 @@ describe("Complex Polynomials", function() {
       p = new CPoly([z1,z2,z3,z4]);
     });
 
-    it("differentiates polynomials",function() {
+    xit("differentiates polynomials",function() {
       var dp = new CPoly([ z2, Complex.fmul(z3,2), Complex.fmul(z4,3) ]);
       expect( CPoly.diff(p).a ).toEqual( dp.a );
     });
 
-    it("differentiates polynomials in place",function() {
+    xit("differentiates polynomials in place",function() {
       var dp = new CPoly([ z2, Complex.fmul(z3,2), Complex.fmul(z4,3) ]);
       p.diff();
       expect( p.a ).toEqual( dp.a );
