@@ -1,3 +1,5 @@
+**Update: I didn't feel good about this library because it didn't have a good foundation. [scijs](https://github.com/scijs/) has a good foundation. I'll almost certainly be putting all further effort there!**
+
 # spacetime.js
 
 spacetime.js is just a few days old, but it represents an ambitious attempt to bring an extended set of basic math capabilities to JavaScript. The truth is that I want to do in JavaScript the sort of engineering/physics calculations that I've previously done in Python/MATLAB, and I'm unable to find a library that covers enough of the basics that it doesn't just make more sense to write it myself. JavaScript is never going to be a strong computing language, but at least until Emscripten and its ilk are better established and serious math libraries are ported, it's what we have.
