@@ -1,4 +1,4 @@
-**Update: I didn't feel good about this library because it didn't have a good foundation. [scijs](https://github.com/scijs/) has a good foundation. I'll almost certainly be putting all further effort there!**
+**Update: I didn't feel good about this library because it didn't have a good foundation. My initial inclination was to roll a bunch of stuff up into one library. After doing my homework, it's clear that a modular approach is wayyyyy better. [scijs](http://scijs.net/packages/) has a good foundation. I'll almost certainly be putting all further effort there!**
 
 # spacetime.js
 
